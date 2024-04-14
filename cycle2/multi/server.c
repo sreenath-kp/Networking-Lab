@@ -12,6 +12,7 @@
 #define PORT 8045
 int clientCount = 0;
 
+
 typedef struct client {
     int index;
     int sockID;
@@ -19,13 +20,13 @@ typedef struct client {
     int len;
 } client;
 
-client Client[1024];
+client Client[10];
 pthread_t thread[1024];
 
 void *clientCommunication(void *ClientDetail) {
-    struct client *clientDetail = (client *)ClientDetail;
-    int index = clientDetail->index;
-    int clientSocket = clientDetail->sockID;
+    struct client clientDetail = *(client *)ClientDetail;
+    int index = clientDetail.index;
+    int clientSocket = clientDetail.sockID;
     printf("Client %d connected.\n", index + 1);
 
     while (1) {
@@ -53,16 +54,16 @@ void *clientCommunication(void *ClientDetail) {
 }
 
 void main() {
-    int serverSocket = socket(PF_INET, SOCK_STREAM, 0);
+    int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     struct sockaddr_in serverAddr;
     serverAddr.sin_family = AF_INET;
-    serverAddr.sin_port = htons(PORT);
+    serverAddr.sin_port = PORT;
     serverAddr.sin_addr.s_addr = htons(INADDR_ANY);
 
     if (bind(serverSocket, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) == -1)
         exit(0);
 
-    if (listen(serverSocket, 1024) == -1)
+    if (listen(serverSocket, 5) == -1)
         exit(0);
 
     printf("Server started listening on port %d..........\n",PORT);

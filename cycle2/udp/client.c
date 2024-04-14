@@ -6,7 +6,7 @@
 void main ()
 {
     char *ip = "127.0.0.1";
-    int port = 5566;
+    int port = 5006;
     int sockfd ;
     struct sockaddr_in addr ;
     char buffer [1024];

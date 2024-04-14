@@ -17,14 +17,13 @@ void send_file(FILE *fp, int sockfd)
             perror("[-] Error in sending data");
             exit(1);
         }
-        
     }
 }
 
-int main ()
+int main(int argc, char *argv)
 {
     char *ip = "127.0.0.1";
-    int port = 8080;
+    int port = atoi(argv[1]);
     int e;
 
     int sockfd, new_sock;
@@ -41,10 +40,10 @@ int main ()
     printf("[+]Server socket created. \n");
 
     server_addr.sin_family = AF_INET;
-    server_addr.sin_port = port;
+    server_addr.sin_port = htons(port);
     server_addr.sin_addr.s_addr = inet_addr(ip);
 
-    e = bind(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr));
+    e = bind(sockfd, (struct sockaddr *)&server_addr, sizeof(server_addr));
     if (e < 0)
     {
         perror("[-]Error in Binding");
@@ -63,18 +62,18 @@ int main ()
         exit(1);
     }
     addr_size = sizeof(new_addr);
-    sockfd = accept(sockfd, (struct sockaddr*)&new_addr, &addr_size);
+    sockfd = accept(sockfd, (struct sockaddr *)&new_addr, &addr_size);
 
     int n = recv(sockfd, buffer, SIZE, 0);
     buffer[n] = '\0';
     printf("%s\n", buffer);
 
-    FILE* fp = fopen(buffer,"r");
+    FILE *fp = fopen(buffer, "r");
     if (fp == NULL)
     {
         printf("failed to open file\n");
         return 0;
     }
-    send_file(fp,sockfd);
+    send_file(fp, sockfd);
     printf("[+]Data written in the text file \n");
 }

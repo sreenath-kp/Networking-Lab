@@ -6,16 +6,18 @@
 
 struct sockaddr_in addr;
 
-void main() {
+void main()
+{
     char *ip = "127.0.0.1";
     int port = 5006;
     int sockfd;
-    
+
     char buffer[1000];
     socklen_t addr_size;
 
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
-    if (sockfd < 0) {
+    if (sockfd < 0)
+    {
         perror("[-] Socket error");
         exit(1);
     }
@@ -32,5 +34,6 @@ void main() {
 
     addr_size = sizeof(addr);
     recvfrom(sockfd, buffer, 1024, 0, (struct sockaddr *)&addr, &addr_size);
-    printf("Data from server: %s\n", buffer);
+    printf("Data from server: %s", buffer);
+    printf("\n");
 }
