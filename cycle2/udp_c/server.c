@@ -5,9 +5,10 @@
 #include <sys/types.h>
 #include <arpa/inet.h>
 
+
 void main() {
     char *ip = "127.0.0.1";
-    int port = 5555;
+    int port = 5506;
     int sockfd;
     struct sockaddr_in server_addr, client_addr;
     char buffer[1024];
@@ -32,14 +33,25 @@ void main() {
         exit(1);
     }
     while(1){
-
     bzero(buffer, 1024);
     addr_size = sizeof(client_addr);
     recvfrom(sockfd, buffer, 1024, 0, (struct sockaddr *)&client_addr, &addr_size);
-    printf("[+] Data from client: %s\n", buffer);
+    if(strcmp(buffer,"exit")==0)
+    {
+        printf("client exited , do you want to exit? ");
+        scanf(" %[^\n]", buffer);
+        if(strcmp(buffer,"exit")==0)
+        {
+            printf("[-] UDP server socket exited.\n");
+            exit(0);
+        }
     }
+    printf("[+] Data from client: %s\n", buffer);
 
-    strcpy(buffer, "Data successfully received.");
-    printf("(Server) Data to client: %s\n", buffer);
+    printf("Enter server data: ");
+    scanf(" %[^\n]", buffer);
     sendto(sockfd, buffer, strlen(buffer), 0, (struct sockaddr *)&client_addr, sizeof(client_addr));
+
+    }
 }
+

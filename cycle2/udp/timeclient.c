@@ -11,7 +11,7 @@ void main() {
     int port = 5006;
     int sockfd;
     
-    char buffer[1024];
+    char buffer[1000];
     socklen_t addr_size;
 
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
@@ -27,23 +27,10 @@ void main() {
     addr.sin_addr.s_addr = inet_addr(ip);
 
     // func(sockfd);
-    while(1){
-    bzero(buffer, 1024);
-    printf("Enter client data: ");
-    scanf(" %[^\n]", buffer);
-    if(strcmp(buffer,"exit")==0)
-    {
-        sendto(sockfd, buffer, strlen(buffer), 0, (struct sockaddr *)&addr, sizeof(addr));
-        printf("[-] UDP client socket exited.\n");
-        exit(0);
-    }
-    // printf("(Client) Data to server: %s\n", buffer);
-
+    strcpy(buffer, "time");
     sendto(sockfd, buffer, strlen(buffer), 0, (struct sockaddr *)&addr, sizeof(addr));
 
-    bzero(buffer, 1024);
     addr_size = sizeof(addr);
     recvfrom(sockfd, buffer, 1024, 0, (struct sockaddr *)&addr, &addr_size);
     printf("Data from server: %s\n", buffer);
-    }
 }

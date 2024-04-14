@@ -15,7 +15,7 @@ void communicate(int sockfd)
 {
 	char buff[MAX];
 	int n;
-	while (1) {
+	while(1){
 		bzero(buff, sizeof(buff));
 		printf("Enter the string : ");
 		n = 0;
@@ -34,7 +34,7 @@ void communicate(int sockfd)
 
 int main()
 {
-	int sockfd, connfd;
+	int sockfd;
 	struct sockaddr_in servaddr, cli;
 
 	// socket create and verification
