@@ -20,17 +20,16 @@ int main(){
     char buffer[512];
     memset(buffer,0, 512);
 
-    struct sockaddr_in addr;
-    int len = sizeof(addr);
+    int len = sizeof(serv_addr);
 
-    while(i<10){
+    while(i<4){
         sprintf(buffer, "%d",i);
         printf("Packet %d sent...\n",i);
         int n = sendto(sockfd, buffer, 512, 0, (struct sockaddr*)&serv_addr ,sizeof(serv_addr));
         bzero(buffer,512);
-        recvfrom(sockfd, buffer, 512, 0, (struct sockaddr*)&addr, &len);
+        recvfrom(sockfd, buffer, 512, 0, (struct sockaddr*)&serv_addr, &len);
         printf("Acknowledgement for Packet %d recieved\n",i);
-        sleep(5);
+        sleep(2);
         i++;
     }
     return 0;

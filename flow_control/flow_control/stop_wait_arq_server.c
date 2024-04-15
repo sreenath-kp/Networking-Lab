@@ -4,7 +4,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <arpa/inet.h>
-#include <sys/time.h>
 #include <netinet/in.h>
 
 #define port 8080
@@ -31,8 +30,8 @@ void main(){
         bzero(buffer, sizeof(buffer));
         recvfrom(sockfd, buffer, sizeof(buffer), 0, (struct sockaddr*)&cl_addr, &len);
         printf("Packet%s recieved\n",buffer);
-        sleep(5);
-        if(rand()%2 != 0){
+        sleep(3);
+        if(rand()%3 != 0){
             printf("Ack for packet %s send\n",buffer);
             sendto(sockfd, buffer, sizeof(buffer), 0, (struct sockaddr*)&cl_addr, len);
         }

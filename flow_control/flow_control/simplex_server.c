@@ -32,7 +32,7 @@ int main(){
     while(1){
         int bytesRecieved = recvfrom(sockfd, buffer, sizeof(buffer), 0, (struct sockaddr*)&cl_addr, &len);
         printf("Packet %s recieved...\n", buffer);
-        sleep(5);
+        sleep(2);
         printf("Sending ack for Packet %s...\n", buffer);
         sendto(sockfd, buffer, 512, 0, (struct sockaddr*)&cl_addr, sizeof(cl_addr));
     }

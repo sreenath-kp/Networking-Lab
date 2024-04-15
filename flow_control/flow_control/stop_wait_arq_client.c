@@ -22,7 +22,7 @@ void main(){
     serv_addr.sin_port = htons(port);
     int len = sizeof(serv_addr);
 
-    int n = 10;
+    int n = 6;
     struct timeval timeout;
     timeout.tv_sec = 8;
     timeout.tv_usec = 0;
