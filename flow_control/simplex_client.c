@@ -18,14 +18,14 @@ int main(){
 
     int i=1;
     char buffer[512];
-    memset(buffer,0, 512);
+    memset(buffer,'\0', 512);
 
     int len = sizeof(serv_addr);
 
     while(i<4){
         sprintf(buffer, "%d",i);
         printf("Packet %d sent...\n",i);
-        int n = sendto(sockfd, buffer, 512, 0, (struct sockaddr*)&serv_addr ,sizeof(serv_addr));
+        int n = sendto(sockfd, buffer, strlen(buffer), 0, (struct sockaddr*)&serv_addr ,sizeof(serv_addr));
         bzero(buffer,512);
         recvfrom(sockfd, buffer, 512, 0, (struct sockaddr*)&serv_addr, &len);
         printf("Acknowledgement for Packet %d recieved\n",i);

@@ -32,17 +32,21 @@ void main()
     int end;
     int byteRec;
     int x, f;
+    // Continuously recieve packets
     while (1)
     {
+        // Receive the start, end, and flag (f) values from the client
         byteRec = recvfrom(sockfd, buffer, sizeof(buffer), 0, (struct sockaddr *)&cl_addr, &len);
-        start = atoi(buffer);
+        start = atoi(buffer); 
         bzero(buffer, sizeof(buffer));
         byteRec = recvfrom(sockfd, buffer, sizeof(buffer), 0, (struct sockaddr *)&cl_addr, &len);
         end = atoi(buffer);
         bzero(buffer, sizeof(buffer));
         byteRec = recvfrom(sockfd, buffer, sizeof(buffer), 0, (struct sockaddr *)&cl_addr, &len);
         f = atoi(buffer);
+
         bzero(buffer, sizeof(buffer));
+        // f==1 implies whole window is been sent
         if (f == 1)
         {
             for (int i = start; i <= end; i++)
@@ -52,16 +56,22 @@ void main()
         }
         else
         {
+            // f==0 means only last packet is been sent
+            // case of window moving right
             printf("packet %d recieved\n", end);
         }
+
+        // Send ack
         sleep(2);
         x = rand();
+        // In 1/3 case, send acknowledgment for a random packet in the window
         if (x % 3 == 0)
         {
             sprintf(buffer, "%d", (rand() % (end - start + 1)) + start);
             sendto(sockfd, buffer, sizeof(buffer), 0, (struct sockaddr *)&cl_addr, len);
             printf("Ack for packed %s sent to client\n", buffer);
         }
+        // In 1/3 case, send acknowledgment for the start packet
         else if (x % 3 == 1)
         {
             sprintf(buffer, "%d", start);

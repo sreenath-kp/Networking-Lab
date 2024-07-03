@@ -34,7 +34,6 @@ void main()
 		size_ad=sizeof(s_a);
 		recvfrom(sockfd,buffer,1024,0,(struct sockaddr *)&s_a,&size_ad);
 		printf("Client : Received acknowledgement for packet %s\n",buffer);
-		// packet++;
 		packetcount++;
 	}
 	

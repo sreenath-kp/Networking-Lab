@@ -24,7 +24,7 @@ void main(){
 
     int n = 6;
     struct timeval timeout;
-    timeout.tv_sec = 8;
+    timeout.tv_sec = 3;
     timeout.tv_usec = 0;
 
     int setsock_status = setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));

@@ -14,7 +14,7 @@ int main() {
     close(fd);
 
     int fdnew=open("destination.txt", O_CREAT | O_WRONLY, 0777);
-    write(fdnew,buffer,20);
+    write(fdnew,buffer,n);
     printf("Written to destination.txt\n");
 
     return 0;

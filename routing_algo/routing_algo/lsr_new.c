@@ -5,6 +5,7 @@
 #define INF 99999
 
 int numNodes;
+// Adjacency matrix representing the network, where graph[i][j] stores the cost from node i to node j 
 int graph[MAX_NODES][MAX_NODES];
 bool visited[MAX_NODES];
 
@@ -27,6 +28,7 @@ void dijkstra(int startNode)
         int minDistance = INF;
         int minNode;
 
+        // Finds the unvisited node with the minimum distance.
         for (int i = 0; i < numNodes; i++)
         {
             if (!visited[i] && distance[i] < minDistance)
@@ -38,6 +40,7 @@ void dijkstra(int startNode)
 
         visited[minNode] = true;
 
+        // Updates the distance to each unvisited neighbor of minNode if a shorter path is found
         for (int i = 0; i < numNodes; i++)
         {
             if (!visited[i] && graph[minNode][i] && distance[minNode] + graph[minNode][i] < distance[i])

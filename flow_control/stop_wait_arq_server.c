@@ -4,7 +4,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <arpa/inet.h>
-#include <netinet/in.h>
 
 #define port 8080
 

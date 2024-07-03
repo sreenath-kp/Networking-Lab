@@ -8,7 +8,7 @@
 int main()
 {
     srand(time(0));
-    int packets[packetCount], i, rate, bucketSize, remainingSize = 0, timeToTransmit, clk, op;
+    int packets[packetCount], i, rate, bucketSize, filledSize = 0, timeToTransmit, clk, op;
 
     for (i = 0; i < packetCount; ++i)
         packets[i] = (rand() % 6 + 1) * 10;
@@ -19,17 +19,17 @@ int main()
     scanf("%d", &bucketSize);
 
     i = 0;
-    while (i < packetCount || remainingSize > 0)
+    while (i < packetCount || filledSize > 0)
     {
         if (i < packetCount)
         {
-            if ((packets[i] + remainingSize) > bucketSize)
+            if ((packets[i] + filledSize) > bucketSize)
                 printf("Bucket capacity exceeded! Packet %d overflow\n", packets[i]);
             else
             {
-                remainingSize += packets[i];
+                filledSize += packets[i];
                 printf("\n\nIncoming Packet size: %d", packets[i]);
-                printf("\nBytes remaining to Transmit: %d", remainingSize);
+                printf("\nBytes remaining to Transmit: %d", filledSize);
             }
             ++i;
         }
@@ -40,15 +40,15 @@ int main()
         for (clk = 10; clk <= timeToTransmit; clk += 10)
         {
             sleep(1);
-            if (remainingSize)
+            if (filledSize)
             {
-                if (remainingSize <= rate)
-                    op = remainingSize, remainingSize = 0;
+                if (filledSize <= rate)
+                    op = filledSize, filledSize = 0;
                 else
-                    op = rate, remainingSize -= rate;
+                    op = rate, filledSize -= rate;
 
                 printf("\nPacket %d transmitted\n", op);
-                printf("Bytes Remaining to Transmit: %d\n", remainingSize);
+                printf("Bytes Remaining to Transmit: %d\n", filledSize);
             }
             else
             {
